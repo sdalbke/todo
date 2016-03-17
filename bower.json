@@ -1,0 +1,24 @@
+{
+  "name": "TodoListApp",
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "authors": [
+    "Steve Dalbke <sdalbke@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "express": "^4.13.4",
+    "angular": "^1.5.1"
+  }
+}
