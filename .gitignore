@@ -1,5 +1,1 @@
-.vs
-Tests/
-bin/
-obj/
-todo.txt
+bower_components/
