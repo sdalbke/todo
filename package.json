@@ -1,0 +1,19 @@
+{
+  "name": "todolistapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "TodoListApp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "C:/Users/sdalb/OneDrive/TodoListApp.git"
+  },
+  "author": "Steve Dalbke <sdalbke@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4"
+  }
+}

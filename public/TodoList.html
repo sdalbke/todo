@@ -3,7 +3,7 @@
 
   <head>
     <title>To-Do List</title>
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   </head>
 
   <body ng-app="TodoList">
@@ -21,17 +21,17 @@
 
       <!-- New To-Do list entries -->
       <div class="row">
-      <form ng-submit="create(formData.text)" novalidate>
+      <form ng-submit="create(formData)" novalidate>
         <input type="text" ng-model="formData.text"></input>
-        <button type="submit" class="btn">Create New To-Do</button>
+        <button type="submit" class="btn">+</button>
       </form>
       </div>
 
       <!-- script dependencies -->
-  	  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-  	  <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-      <script src="../bower_components/angular/angular.min.js"></script>
-      <script src="js/TodoListApp.js"></script>
+  	  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  	  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="bower_components/angular/angular.min.js"></script>
+      <script src="js/TodoListController.js"></script>
   	</div>
   </body>
 
