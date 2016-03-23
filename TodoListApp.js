@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // used to parse form data
 
 // GET: fetch all to-dos
 app.get('/todos', function (request, response) {
-    refreshData();
+    sendTodos(response);
 });
 
 app.get('*', function (request, response) {
@@ -34,7 +34,7 @@ app.post('/todos', function(request, response) {
     var todo = { description: request.body.text }
 
     todoDataModel.create(todo).then(function(data) {
-        refreshData();  
+        sendTodos(response);  
     });
 });
 
@@ -42,12 +42,12 @@ app.post('/todos', function(request, response) {
 app.delete('/todos/:id', function(request, response) {
     // Find the todo with the mathing ID to delete
     todoDataModel.destroy({ where: { id: request.params.id }}).then(function(data) {
-        refreshData();
+        sendTodos(response);
     });
 });
 
-// Fetch all to-dos from the database
-function refreshData() {
+// Fetch all to-dos from the database and send them to the client as JSON
+function sendTodos(response) {
     todoDataModel.findAll().then(function(data) {
         response.json(data);
     }).catch(function(err) {
