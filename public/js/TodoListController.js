@@ -12,12 +12,14 @@
         // Create a new todo
         $scope.create = function(formData) {
 
-            $http.post('/todos', formData).success(function(data) {
-                $scope.todos = data;
-            });
+            if(formData.text.length > 0) {
+                $http.post('/todos', formData).success(function(data) {
+                    $scope.todos = data;
+                });
 
-            // Clear the text box
-            $scope.formData = {};
+                // Clear the text box
+                $scope.formData = {};
+            }
         };
 
         // Delete a todo from the list
