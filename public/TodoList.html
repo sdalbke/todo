@@ -9,7 +9,7 @@
 
   <body ng-app="TodoList">
 
-    <div class="navbar navbar-inverse nav-bar-fixed-top">
+    <div class="navbar navbar-colored nav-bar-fixed-top">
       <h1 class="text-center">To-Do List</h1>
     </div>
 
@@ -31,7 +31,7 @@
       <!-- Add To-Do -->
       <div class="row">
         <div class="col-xs-12 col-sm-offset-4 col-sm-4">
-          <form class="form-inline" ng-submit="create(formData)" novalidate>
+          <form id="addTodoInput" class="form-inline" ng-submit="create(formData)" novalidate>
             <input type="text" class="form-control" ng-model="formData.text" placeholder="Enter task"></input>
             <button type="submit" class="btn btn-primary">+</button>
           </form>
