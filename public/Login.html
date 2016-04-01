@@ -7,14 +7,26 @@
     <link rel="stylesheet" href="css/ToDoList.css">
   </head>
 
-  <body ng-app="TodoList">
+  <body ng-app="Login">
 
+  <div class="container" ng-controller="LoginController"> 
 
+      <form class="form-signin" ng-submit="login()">
+        <label for="inputUsername" class="sr-only">Email address</label>
+        <input type="text" id="inputUsername" class="form-control" placeholder="Username" ng-model="username" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" class="form-control" placeholder="Password" ng-model="password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+      </form>
 
     <!-- script dependencies -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/ngstorage/ngStorage.min.js"></script>
+    <script src="js/LoginController.js"></script>
+
+  </div>
 
   </body>
 
