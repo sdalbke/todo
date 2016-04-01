@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 var bodyParser = require('body-parser');
 var Sequelize = require('sequelize');
+var jwt = require('jsonwebtoken');
 
 // Connect to the database
 var sequelize = new Sequelize('ToDo', 'n/a', 'n/a', {
@@ -12,6 +13,7 @@ var sequelize = new Sequelize('ToDo', 'n/a', 'n/a', {
 
 // Used to interact with the ToDo table in the database
 var todoDataModel = sequelize.import(__dirname + "/data/models/ToDo")
+var userDataModel = sequelize.import(__dirname + "/data/models/User")
 
 // Add middleware
 app.use(express.static(__dirname + '/public'));
@@ -19,13 +21,21 @@ app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use(bodyParser.json()); // used to parse json
 app.use(bodyParser.urlencoded({ extended: true })); // used to parse form data
 
+/*var myRouter = express.Router();
+
+myRouter.get('*', function (request, response) {
+    console.log("router");
+    response.sendFile(__dirname + '/public/Login.html');
+});*/
+
 // GET: fetch all to-dos
 app.get('/todos', function (request, response) {
     sendTodos(response);
 });
 
-app.get('*', function (request, response) {
-    response.sendFile(__dirname + '/public/TodoList.html');
+app.get('/', function (request, response) {
+    console.log("normal");
+    response.sendFile(__dirname + '/public/Login.html');
 });
 
 // POST: create a new to-do
