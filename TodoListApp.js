@@ -21,20 +21,12 @@ app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use(bodyParser.json()); // used to parse json
 app.use(bodyParser.urlencoded({ extended: true })); // used to parse form data
 
-/*var myRouter = express.Router();
-
-myRouter.get('*', function (request, response) {
-    console.log("router");
-    response.sendFile(__dirname + '/public/Login.html');
-});*/
-
 // GET: fetch all to-dos
 app.get('/todos', function (request, response) {
     sendTodos(response);
 });
 
 app.get('/', function (request, response) {
-    console.log("normal");
     response.sendFile(__dirname + '/public/Login.html');
 });
 
@@ -45,6 +37,28 @@ app.post('/todos', function(request, response) {
 
     todoDataModel.create(todo).then(function(data) {
         sendTodos(response);  
+    });
+});
+
+app.post('/authenticate', function(request, response) {
+
+    console.log(request.body);
+
+    // Find the user trying to authenticate
+    userDataModel.findOne({ where: { username: request.body.username }}).then(function(data) {
+
+        // Verify the password matches
+        if(data.password == request.body.password) {
+            var payload = { username: data.dataValues.username }
+            var token = jwt.sign(payload, 'hardCodedSecret', { expiresIn: 300 });
+            response.json({ success: true, message: 'Authenticated', token: token });
+        } else {
+            response.json({ success: false, message: 'Invalid password'});
+        }
+
+    }).catch(function(err) {
+        console.error(err);
+        response.json({ success: false, message: 'Failed to find user' });
     });
 });
 
