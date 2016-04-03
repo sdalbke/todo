@@ -2,9 +2,25 @@ h1 {
   color: white;
 }
 
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-control {
+    margin: 4px;
+}
+
 .navbar-colored {
     background-color: #006699;
     border-color: #00334d;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
 }
 
 #addTodoInput {
@@ -14,4 +30,8 @@ h1 {
 #errorMessage {
     text-align: center;
     color: #ff0000;
+}
+
+#loginButton {
+    margin: 4px;
 }

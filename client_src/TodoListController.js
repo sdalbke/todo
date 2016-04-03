@@ -1,6 +1,6 @@
 // This module is responsible for CRUD operations on the to-do list
 (function(){
-    angular.module('TodoList', ['ngStorage'])
+    angular.module('TodoList')
     .config(['$httpProvider', function($httpProvider) {
         $httpProvider.interceptors.push('APIInterceptor');
     }])

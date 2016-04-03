@@ -9,9 +9,7 @@
 
   <body ng-app="TodoList">
 
-    <div class="navbar navbar-colored nav-bar-fixed-top">
-      <h1 class="text-center">To-Do List</h1>
-    </div>
+    <app-header></app-header>
 
     <div class="container-fluid" ng-controller="TodoListController">
 
@@ -45,6 +43,8 @@
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/ngstorage/ngStorage.min.js"></script>
+    <script src="js/TodoListApp.js"></script>
+    <script src="js/CommonDirectives.js"></script>
     <script src="js/TodoListController.js"></script>
 
   </body>
