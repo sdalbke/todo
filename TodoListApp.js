@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var Sequelize = require('sequelize');
 var jwt = require('jsonwebtoken');
+var httpStatus = require('http-status-codes');
 
 // Connect to the database
 var sequelize = new Sequelize('ToDo', 'n/a', 'n/a', {
@@ -10,6 +11,9 @@ var sequelize = new Sequelize('ToDo', 'n/a', 'n/a', {
   dialect: 'sqlite',
   storage: 'data/todos.sqlite3'
 });
+
+// Configuration
+app.set('secret', 'mySecret');
 
 // Used to interact with the ToDo table in the database
 var todoDataModel = sequelize.import(__dirname + "/data/models/ToDo")
@@ -20,6 +24,39 @@ app.use(express.static(__dirname + '/public'));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use(bodyParser.json()); // used to parse json
 app.use(bodyParser.urlencoded({ extended: true })); // used to parse form data
+
+var secureRouter = express.Router();
+
+secureRouter.use(function(request, response, next){
+    var token = request.body.token;
+
+    if(token) {
+        // Verify the token is valid
+        jwt.verify(token, app.get('secret'), function(err, decoded) {
+            if(err) {
+                response.status(httpStatus.FORBIDDEN).json({
+                    success: false,
+                    message: "Failed to authenticate user"
+                }); 
+            } else {
+                request.decodedToken = decoded;
+                next();
+            }
+        });
+
+        response.status(httpStatus.OK).json({
+            success: true,
+            message: "Authentication successful"
+        });
+    } else {
+        response.status(httpStatus.FORBIDDEN).json({
+            success: false,
+            message: "Failed to authenticate user"
+        });
+    }
+});
+
+app.use('/todos', secureRouter);
 
 // GET: fetch all to-dos
 app.get('/todos', function (request, response) {
