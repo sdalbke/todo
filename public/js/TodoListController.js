@@ -1,8 +1,10 @@
 // This module is responsible for CRUD operations on the to-do list
 (function(){
-    var app = angular.module('TodoList', []);
+    var app = angular.module('TodoList', ['ngStorage']);
 
-    app.controller("TodoListController", ['$scope', '$http', function($scope, $http) {
+    app.controller("TodoListController", ['$scope', '$http', '$localStorage', function($scope, $http, $localStorage) {
+
+        $scope.$storage = $localStorage;
 
         // When the page loads, fetch all todos from the server
         $http.get('/todos').success(function(data) {

@@ -14,10 +14,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    token: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     createdAt: {
       // stored as ints represeting unix time to work with sqlite
       type: DataTypes.INTEGER,

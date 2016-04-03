@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var Sequelize = require('sequelize');
 var jwt = require('jsonwebtoken');
 var httpStatus = require('http-status-codes');
+var passwordHash = require('password-hash');
 
 // Connect to the database
 var sequelize = new Sequelize('ToDo', 'n/a', 'n/a', {
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // used to parse form data
 var secureRouter = express.Router();
 
 secureRouter.use(function(request, response, next){
+    
     var token = request.body.token;
 
     if(token) {
@@ -78,14 +80,13 @@ app.post('/todos', function(request, response) {
 });
 
 app.post('/authenticate', function(request, response) {
-
-    console.log(request.body);
-
     // Find the user trying to authenticate
     userDataModel.findOne({ where: { username: request.body.username }}).then(function(data) {
 
         // Verify the password matches
-        if(data.password == request.body.password) {
+        var isPasswordValid = passwordHash.verify(request.body.password, data.password);
+
+        if(isPasswordValid) {
             var payload = { username: data.dataValues.username }
             var token = jwt.sign(payload, 'hardCodedSecret', { expiresIn: 300 });
             response.json({ success: true, message: 'Authenticated', token: token });
