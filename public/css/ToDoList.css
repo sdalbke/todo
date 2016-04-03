@@ -10,3 +10,8 @@ h1 {
 #addTodoInput {
     text-align: center; 
 }
+
+#errorMessage {
+    text-align: center;
+    color: #ff0000;
+}

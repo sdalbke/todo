@@ -1,21 +1,20 @@
 // This module is responsible for CRUD operations on the to-do list
 (function(){
-    var app = angular.module('TodoList', ['ngStorage']);
-
-    app.config(['$httpProvider', function($httpProvider) {
+    angular.module('TodoList', ['ngStorage'])
+    .config(['$httpProvider', function($httpProvider) {
         $httpProvider.interceptors.push('APIInterceptor');
-    }]);
+    }])
+    .service('APIInterceptor', function($q, $localStorage, $window) {
 
-    app.service('APIInterceptor', function($q, $localStorage, $window) {
-
-        var service = this;
-
-        service.request = function(config) {
+        // Add the authorization header with the token on any requests
+        // made to the todo API
+        this.request = function(config) {
             config.headers.authorization = $localStorage.token;
             return config;
         };
 
-        service.responseError = function(response) {
+        this.responseError = function(response) {
+            // If the API doesn't except the token, redirect to the login page
             if (response.status === 401) {
                 $window.location.href = "/";
                 return $q.reject(response);
@@ -23,9 +22,8 @@
                 return response;
             }
         };
-    });
-
-    app.controller('TodoListController', ['$scope', '$http', '$localStorage', function($scope, $http, $localStorage) {
+    })
+    .controller('TodoListController', ['$scope', '$http', '$localStorage', function($scope, $http, $localStorage) {
 
         // When the page loads, fetch all todos from the server
         $http.get('/todos').success(function(data) {
