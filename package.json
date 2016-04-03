@@ -15,11 +15,15 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
+    "gulp": "^3.9.1",
     "http-status-codes": "^1.0.6",
     "jsonwebtoken": "^5.7.0",
     "password-hash": "^1.2.2",
     "sequelize": "^3.19.3",
     "sqlite": "0.0.4",
     "sqlite3": "^3.1.2"
+  },
+  "devDependencies": {
+    "gulp-uglify": "^1.5.3"
   }
 }
