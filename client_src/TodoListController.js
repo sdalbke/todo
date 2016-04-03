@@ -2,9 +2,30 @@
 (function(){
     var app = angular.module('TodoList', ['ngStorage']);
 
-    app.controller("TodoListController", ['$scope', '$http', '$localStorage', function($scope, $http, $localStorage) {
+    app.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.interceptors.push('APIInterceptor');
+    }]);
 
-        $scope.$storage = $localStorage;
+    app.service('APIInterceptor', function($q, $localStorage, $window) {
+
+        var service = this;
+
+        service.request = function(config) {
+            config.headers.authorization = $localStorage.token;
+            return config;
+        };
+
+        service.responseError = function(response) {
+            if (response.status === 401) {
+                $window.location.href = "/";
+                return $q.reject(response);
+            } else {
+                return response;
+            }
+        };
+    });
+
+    app.controller('TodoListController', ['$scope', '$http', '$localStorage', function($scope, $http, $localStorage) {
 
         // When the page loads, fetch all todos from the server
         $http.get('/todos').success(function(data) {

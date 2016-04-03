@@ -15,6 +15,7 @@ var sequelize = new Sequelize('ToDo', 'n/a', 'n/a', {
 
 // Configuration
 app.set('secret', 'mySecret');
+app.set('port', 8080);
 
 // Used to interact with the ToDo table in the database
 var todoDataModel = sequelize.import(__dirname + "/data/models/ToDo")
@@ -30,12 +31,13 @@ var secureRouter = express.Router();
 
 secureRouter.use(function(request, response, next){
     
-    var token = request.body.token;
+    var token = request.headers.authorization;
 
     if(token) {
         // Verify the token is valid
         jwt.verify(token, app.get('secret'), function(err, decoded) {
             if(err) {
+                console.error(err);
                 response.status(httpStatus.FORBIDDEN).json({
                     success: false,
                     message: "Failed to authenticate user"
@@ -45,13 +47,8 @@ secureRouter.use(function(request, response, next){
                 next();
             }
         });
-
-        response.status(httpStatus.OK).json({
-            success: true,
-            message: "Authentication successful"
-        });
     } else {
-        response.status(httpStatus.FORBIDDEN).json({
+        response.status(httpStatus.UNAUTHORIZED).json({
             success: false,
             message: "Failed to authenticate user"
         });
@@ -88,7 +85,7 @@ app.post('/authenticate', function(request, response) {
 
         if(isPasswordValid) {
             var payload = { username: data.dataValues.username }
-            var token = jwt.sign(payload, 'hardCodedSecret', { expiresIn: 300 });
+            var token = jwt.sign(payload, app.get('secret'), { expiresIn: 300 });
             response.json({ success: true, message: 'Authenticated', token: token });
         } else {
             response.json({ success: false, message: 'Invalid password'});
@@ -117,5 +114,5 @@ function sendTodos(response) {
     });
 }
 
-app.listen(8080);
+app.listen(app.get('port'));
 
