@@ -1,6 +1,6 @@
 // This module is responsible for user login
 (function(){
-    angular.module('Login', ['ngStorage'])
+    angular.module('TodoList')
     .controller("LoginController", ['$scope', '$http', '$localStorage', function($scope, $http, $localStorage) {
 
         $scope.errorMessage = '';
