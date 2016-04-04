@@ -15,7 +15,7 @@
 
         this.responseError = function(response) {
             // If the API doesn't except the token, redirect to the login page
-            if (response.status === 401) {
+            if (response.status === 401 || response.status === 403) {
                 $window.location.href = "/";
                 return $q.reject(response);
             } else {
